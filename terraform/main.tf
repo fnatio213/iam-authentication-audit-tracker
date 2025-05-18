@@ -1,3 +1,5 @@
+# Terraform for IAM Authentication Audit Tracker
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -52,4 +54,43 @@ resource "aws_iam_role_policy" "cloudtrail_logs_policy" {
       Effect   = "Allow",
       Action   = ["logs:CreateLogStream", "logs:PutLogEvents"],
       Resource = "*"
-    }
+    }]
+  })
+}
+
+resource "aws_cloudwatch_log_metric_filter" "failed_console_logins" {
+  name           = "FailedConsoleLogins"
+  log_group_name = aws_cloudwatch_log_group.iam_audit_logs.name
+  pattern        = "{ $.eventName = \"ConsoleLogin\" && $.responseElements.ConsoleLogin = \"Failure\" }"
+
+  metric_transformation {
+    name      = "FailedConsoleLogins"
+    namespace = "IAMAnomalies"
+    value     = "1"
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "failed_login_alarm" {
+  alarm_name          = "FailedLoginsAlarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  metric_name         = aws_cloudwatch_log_metric_filter.failed_console_logins.metric_transformation[0].name
+  namespace           = aws_cloudwatch_log_metric_filter.failed_console_logins.metric_transformation[0].namespace
+  period              = 300
+  statistic           = "Sum"
+  threshold           = 5
+  alarm_actions       = [aws_sns_topic.security_alerts.arn]
+}
+
+resource "aws_sns_topic" "security_alerts" {
+  name = "SecurityAlerts"
+}
+
+resource "aws_sns_topic_subscription" "email_alert" {
+  topic_arn = aws_sns_topic.security_alerts.arn
+  protocol  = "email"
+  endpoint  = "your-email@example.com"
+}
+
+# GitHub Actions Trigger Note:
+# This comment was added to manually trigger CI validation and security workflow.
