@@ -23,19 +23,64 @@ Built for security engineers, auditors, and GRC practitioners, this lab showcase
 ![IAM Architecture Diagram](./assets/iam-auth-arch.png)
 
 ## ⚙️ Prerequisites
-(Insert Prerequisites section content here)
+
+### 🔐 AWS Account
+- An active AWS account with **AdministratorAccess** or equivalent IAM permissions:
+  - IAM, CloudTrail, CloudWatch, SNS, Lambda, Athena, and S3
+
+### 🛠️ Tools & Setup
+- AWS CLI v2 (`aws configure`)
+- Terraform
+- IAM user with programmatic access
+- Optional: VS Code + AWS Toolkit
+
+### 📦 AWS Services Enabled
+- **CloudTrail** with S3 + CloudWatch Logs
+- **Athena** + **S3** for queries
+- **CloudWatch Alarms**, **SNS**, **Lambda**
+
+### 📝 IAM Permissions Required
+- `CloudTrailFullAccess`
+- `CloudWatchFullAccess`
+- `AmazonS3FullAccess`
+- `AmazonAthenaFullAccess`
+- `AWSLambda_FullAccess`
+- `AmazonSNSFullAccess`
+- `AWSConfigUserAccess`
 
 ## 🧪 Lab Steps
-(Insert Lab Steps content here)
+
+1. **Enable CloudTrail** with S3 + CloudWatch Logs delivery.
+2. **Create Log Metric Filter** in CloudWatch for failed `ConsoleLogin`.
+3. **Set CloudWatch Alarm** to detect 5+ failed logins in 5 minutes.
+4. **Create SNS Topic** for security alerts.
+5. *(Optional)* Add Lambda for alert enrichment.
+6. **Use Athena** to query logs and detect trends.
 
 ## 🛠️ Automation (Terraform)
-Terraform IaC is located in the `terraform/` folder.
+Terraform IaC is located in the `terraform/` folder and includes:
+- S3 bucket for CloudTrail logs
+- CloudTrail with CloudWatch Logs integration
+- IAM role/policy for CloudTrail logging
+- Metric filter and alarm for failed logins
+- SNS for alerting
 
 ## 📋 Compliance Mapping
-(Insert Compliance Mapping section content here)
+
+| Framework | Control       | Mapping Details |
+|-----------|---------------|------------------|
+| NIST 800-53 | AU-6, AC-7   | Alerting on login failures, centralized logging |
+| ISO 27001   | A.12.4       | Monitoring and audit logs |
+| CSA CCM     | IAM-03, SEF-02 | IAM behavior tracking and audit enablement |
+| CIS v8      | Controls 5, 8 | Account + audit log management |
 
 ## 🧠 Skills Demonstrated
-(Insert Skills Demonstrated section here)
+
+- AWS CloudTrail + CloudWatch integration
+- Terraform IaC for security detection setup
+- Audit log querying with Athena
+- Compliance mapping (NIST, ISO, CSA)
+- Detection of IAM anomalies and alerting
 
 ## 📚 Resources
 - AWS CloudTrail
