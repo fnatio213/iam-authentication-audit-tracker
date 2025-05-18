@@ -1,4 +1,10 @@
 # IAM Authentication Audit Tracker
+![Terraform](https://img.shields.io/badge/IaC-Terraform-623CE4?logo=terraform&logoColor=white)
+![AWS Region](https://img.shields.io/badge/Region-us--east--1-orange?logo=aws)
+![Compliance](https://img.shields.io/badge/NIST_SP800--53-AU--6,_AC--7-blue)
+![ISO 27001](https://img.shields.io/badge/ISO_27001-A.12.4-success)
+![Audit Ready](https://img.shields.io/badge/Audit-Trail_Enabled-brightgreen)
+![Skill Focus](https://img.shields.io/badge/Skills-SecOps_&_GRC-blueviolet)
 
 ## 📘 Overview
 In the world of cloud-native infrastructure, Identity and Access Management (IAM) is the first line of defense—and often the most targeted. Yet, too many organizations struggle to detect when IAM credentials are misused or abused. The **IAM Authentication Audit Tracker** simulates a real-world detection and response pipeline for IAM authentication behaviors using AWS-native services.
