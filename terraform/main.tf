@@ -67,11 +67,11 @@ resource "aws_iam_role" "cloudtrail_logs_role" {
   name = "CloudTrail_Logs_To_CW"
 
   assume_role_policy = jsonencode({
-    Version   = "2012-10-17",
+    Version = "2012-10-17",
     Statement = [
       {
-        Action    = "sts:AssumeRole",
-        Effect    = "Allow",
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
         Principal = {
           Service = "cloudtrail.amazonaws.com"
         }
@@ -85,11 +85,11 @@ resource "aws_iam_role_policy" "cloudtrail_logs_policy" {
   role = aws_iam_role.cloudtrail_logs_role.id
 
   policy = jsonencode({
-    Version   = "2012-10-17",
+    Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow",
-        Action = ["logs:CreateLogStream", "logs:PutLogEvents"],
+        Effect   = "Allow",
+        Action   = ["logs:CreateLogStream", "logs:PutLogEvents"],
         Resource = aws_cloudwatch_log_group.iam_audit_logs.arn
       }
     ]
