@@ -6,6 +6,7 @@
 ![ISO 27001](https://img.shields.io/badge/ISO_27001-A.12.4-success)
 ![Audit Ready](https://img.shields.io/badge/Audit-Trail_Enabled-brightgreen)
 ![Skill Focus](https://img.shields.io/badge/Skills-SecOps_&_GRC-blueviolet)
+![CI](https://github.com/Runc9/iam-authentication-audit-tracker/actions/workflows/terraform-validate.yml/badge.svg)
 
 ---
 
