@@ -1,12 +1,10 @@
-# Terraform for IAM Authentication Audit Tracker
-
 provider "aws" {
   region = "us-east-1"
 }
 
 resource "aws_s3_bucket" "cloudtrail_logs" {
-  bucket = "iam-auth-tracker-logs"
-  force_destroy = true
+  bucket         = "iam-auth-tracker-logs"
+  force_destroy  = true
 }
 
 resource "aws_cloudtrail" "iam_audit_trail" {
@@ -93,4 +91,4 @@ resource "aws_sns_topic_subscription" "email_alert" {
 }
 
 # GitHub Actions Trigger Note:
-# This comment was added to manually trigger CI validation and security workflow.
+# Any changes to this file will trigger terraform validation in the CI workflow.
