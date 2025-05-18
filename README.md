@@ -5,6 +5,25 @@
 ![ISO 27001](https://img.shields.io/badge/ISO_27001-A.12.4-success)
 ![Audit Ready](https://img.shields.io/badge/Audit-Trail_Enabled-brightgreen)
 ![Skill Focus](https://img.shields.io/badge/Skills-SecOps_&_GRC-blueviolet)
+![tfsec status](https://img.shields.io/badge/tfsec-Demo_Lab_Insecure-red)
+
+> ⚠️ **Security Lab Mode**: The initial version of this Terraform config was intentionally insecure to demonstrate common findings from tfsec and educate on remediations. See GitHub Actions logs for full vulnerability breakdown.
+![Security Hardened](https://img.shields.io/badge/Status-Hardened_GRC_Compliant-brightgreen)
+
+> ✅ **Hardened Mode Enabled**: The current Terraform code has been updated to include encryption, access restrictions, and compliance enhancements following NIST 800-53, CIS Benchmarks, and tfsec recommendations.
+
+## 🔁 Before vs After: Security Hardening Comparison
+
+| Component         | Insecure Demo Version                                          | Hardened GRC Version                                              |
+|------------------|----------------------------------------------------------------|-------------------------------------------------------------------|
+| **S3 Bucket**     | No encryption, no logging, no public access blocking          | Encrypted with KMS, versioning enabled, logging, public access blocked |
+| **CloudTrail**    | No log validation, no encryption                              | KMS encryption enabled, log file validation turned on            |
+| **CloudWatch Logs** | Unencrypted log group                                        | KMS-encrypted log group with 90-day retention                    |
+| **IAM Policy**    | Wildcard `*` resource permission                              | Scoped to specific CloudWatch log group ARN                      |
+| **SNS Topic**     | No encryption                                                 | Encrypted with KMS                                               |
+| **Security Tooling** | tfsec detects 15 high/med/low issues                       | tfsec passes — all high severity issues remediated               |
+
+> 📘 This comparison illustrates how the Terraform code was transformed from a security demo mode into a compliant, hardened infrastructure-as-code pipeline.
 
 ## 📘 Overview
 In the world of cloud-native infrastructure, Identity and Access Management (IAM) is the first line of defense—and often the most targeted. Yet, too many organizations struggle to detect when IAM credentials are misused or abused. The **IAM Authentication Audit Tracker** simulates a real-world detection and response pipeline for IAM authentication behaviors using AWS-native services.
@@ -64,6 +83,16 @@ Terraform IaC is located in the `terraform/` folder and includes:
 - IAM role/policy for CloudTrail logging
 - Metric filter and alarm for failed logins
 - SNS for alerting
+> ⚠️ **Security Scan Findings (tfsec):**
+> 
+> This Terraform configuration is intentionally left with known misconfigurations for demo purposes.  
+> The GitHub Actions pipeline runs `tfsec`, which reports issues like:
+> - Missing S3 encryption
+> - Lack of CloudTrail log validation
+> - Wildcard IAM permissions
+> - Unencrypted SNS topics and log groups
+> 
+> These findings help illustrate how IaC scans detect misconfigured resources before deployment.
 
 ## 📋 Compliance Mapping
 
