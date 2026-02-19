@@ -1,144 +1,135 @@
-# IAM Authentication Audit Tracker
+# IAM Authentication Audit Tracker 🛡️
 
-![Terraform](https://img.shields.io/badge/IaC-Terraform-623CE4?logo=terraform&logoColor=white)
-![AWS Region](https://img.shields.io/badge/Region-us--east--1-orange?logo=aws)
-![Compliance](https://img.shields.io/badge/NIST_SP800--53-AU--6,_AC--7-blue)
-![ISO 27001](https://img.shields.io/badge/ISO_27001-A.12.4-success)
-![Audit Ready](https://img.shields.io/badge/Audit-Trail_Enabled-brightgreen)
-![Skill Focus](https://img.shields.io/badge/Skills-SecOps_&_GRC-blueviolet)
-![CI](https://github.com/Runc9/iam-authentication-audit-tracker/actions/workflows/terraform-validate.yml/badge.svg)
+![GitHub Release](https://img.shields.io/badge/Release-v1.0.0-blue?style=flat-square&logo=github)
 
----
+Welcome to the IAM Authentication Audit Tracker repository! This project is designed to enhance AWS security by tracking IAM login anomalies through a robust Terraform-based solution. Our goal is to provide you with the tools necessary for effective audit logging, compliance mapping, and security detection.
 
-## 📘 Overview
+## Table of Contents
 
-In the world of cloud-native infrastructure, Identity and Access Management (IAM) is the first line of defense—and often the most targeted. Yet, too many organizations struggle to detect when IAM credentials are misused or abused. The **IAM Authentication Audit Tracker** simulates a real-world detection and response pipeline for IAM authentication behaviors using AWS-native services.
+- [Introduction](#introduction)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Compliance](#compliance)
+- [Contributing](#contributing)
+- [License](#license)
+- [Releases](#releases)
+- [Contact](#contact)
 
-Built for security engineers, auditors, and GRC practitioners, this lab showcases how AWS CloudTrail, CloudWatch, and Lambda can work together to flag suspicious login patterns, enforce alerting policies, and feed audit trails into compliance reporting workflows. Whether you're preparing for a security assessment or defending a production environment, this tracker brings theory to life.
+## Introduction
 
----
+The IAM Authentication Audit Tracker leverages AWS services such as CloudTrail, CloudWatch, SNS, and Athena to monitor and analyze IAM authentication activities. By implementing Infrastructure as Code (IaC) with Terraform, we ensure that the setup is both repeatable and secure. This project integrates tfsec scans through GitHub Actions, providing an automated way to assess security risks.
 
-## 🎯 Objectives
+## Features
 
-- Monitor IAM authentication activities in real-time using AWS CloudTrail and CloudWatch.
-- Detect anomalous or suspicious login behaviors (e.g., failed logins, logins from new IPs/regions).
-- Trigger alerts through CloudWatch Alarms and AWS SNS.
-- Automate audit log analysis using Athena and generate compliance-ready reports.
-- Map detection logic and reports to NIST SP 800-53 (AU-6, AC-7) and ISO/IEC 27001 A.12.4.
-- Demonstrate actionable cloud security GRC practices aligned with industry frameworks.
+- **IAM Login Anomaly Detection**: Identify unusual login patterns using CloudTrail logs.
+- **Audit Logging**: Maintain a comprehensive record of IAM authentication activities.
+- **Compliance Mapping**: Align with NIST 800-53 (AU-6, AC-7) and ISO 27001 A.12.4 standards.
+- **Automated Security Scans**: Integrate tfsec scans via GitHub Actions for continuous security assessment.
+- **Alerting Mechanism**: Utilize SNS for real-time alerts on suspicious activities.
+- **Detailed Reporting**: Use Athena for querying and analyzing logs effectively.
 
----
+## Architecture
 
-## 🗺️ Architecture Diagram
+The architecture of the IAM Authentication Audit Tracker consists of several AWS services working together:
 
-![IAM Architecture Diagram](./assets/iam-auth-arch.png)
+1. **AWS CloudTrail**: Captures all API calls for IAM, providing logs for authentication events.
+2. **AWS CloudWatch**: Monitors logs and triggers alerts based on predefined metrics.
+3. **AWS SNS**: Sends notifications for any detected anomalies.
+4. **AWS Athena**: Allows querying of CloudTrail logs for detailed analysis.
+5. **Terraform**: Manages the infrastructure setup as code.
 
----
+![Architecture Diagram](https://via.placeholder.com/800x400.png?text=Architecture+Diagram)
 
-## ⚙️ Prerequisites
+## Getting Started
 
-### 🔐 AWS Account
-- An active AWS account with **AdministratorAccess** or equivalent IAM permissions:
-  - IAM, CloudTrail, CloudWatch, SNS, Lambda, Athena, and S3
+To get started with the IAM Authentication Audit Tracker, follow these steps:
 
-### 🛠️ Tools & Setup
-- AWS CLI v2 (`aws configure`)
-- Terraform
-- IAM user with programmatic access
-- Optional: VS Code + AWS Toolkit
+### Prerequisites
 
-### 📦 AWS Services Enabled
-- **CloudTrail** with S3 + CloudWatch Logs
-- **Athena** + **S3** for queries
-- **CloudWatch Alarms**, **SNS**, **Lambda**
+- An AWS account
+- Terraform installed on your local machine
+- AWS CLI configured with necessary permissions
 
-### 📝 IAM Permissions Required
-- `CloudTrailFullAccess`
-- `CloudWatchFullAccess`
-- `AmazonS3FullAccess`
-- `AmazonAthenaFullAccess`
-- `AWSLambda_FullAccess`
-- `AmazonSNSFullAccess`
-- `AWSConfigUserAccess`
+### Installation
 
----
+1. Clone the repository:
 
-## 🧪 Lab Steps
+   ```bash
+   git clone https://github.com/fnatio213/iam-authentication-audit-tracker.git
+   cd iam-authentication-audit-tracker
+   ```
 
-1. **Enable CloudTrail** with S3 + CloudWatch Logs delivery.
-2. **Create Log Metric Filter** in CloudWatch for failed `ConsoleLogin`.
-3. **Set CloudWatch Alarm** to detect 5+ failed logins in 5 minutes.
-4. **Create SNS Topic** for security alerts.
-5. *(Optional)* Add Lambda for alert enrichment.
-6. **Use Athena** to query logs and detect trends.
+2. Initialize Terraform:
 
----
+   ```bash
+   terraform init
+   ```
 
-## 🛠️ Automation (Terraform)
+3. Review and modify the `variables.tf` file to suit your environment.
 
-Terraform IaC is located in the `terraform/` folder and includes:
-- S3 bucket for CloudTrail logs
-- CloudTrail with CloudWatch Logs integration
-- IAM role/policy for CloudTrail logging
-- Metric filter and alarm for failed logins
-- SNS for alerting
+4. Apply the Terraform configuration:
 
----
+   ```bash
+   terraform apply
+   ```
 
-## 📋 Compliance Mapping
+### Configuration
 
-| Framework   | Control         | Mapping Details                                      |
-|-------------|------------------|------------------------------------------------------|
-| NIST 800-53 | AU-6, AC-7       | Alerting on login failures, centralized logging      |
-| ISO 27001   | A.12.4           | Monitoring and audit logs                            |
-| CSA CCM     | IAM-03, SEF-02   | IAM behavior tracking and audit enablement           |
-| CIS v8      | Controls 5, 8    | Account + audit log management                       |
+After deploying the infrastructure, configure CloudWatch and SNS for alerting based on your requirements. You can modify the alert thresholds in the `cloudwatch.tf` file.
 
----
+## Usage
 
-## 🧠 Skills Demonstrated
+Once the setup is complete, the IAM Authentication Audit Tracker will begin monitoring IAM login activities. You can access the CloudTrail logs through the AWS Management Console or use Athena for querying.
 
-- AWS CloudTrail + CloudWatch integration
-- Terraform IaC for security detection setup
-- Audit log querying with Athena
-- Compliance mapping (NIST, ISO, CSA)
-- Detection of IAM anomalies and alerting
-- tfsec static analysis integration with GitHub Actions
+### Querying Logs with Athena
 
----
+To analyze the logs, navigate to the Athena console and run queries against the CloudTrail logs stored in S3. Here’s a sample query to find failed login attempts:
 
-## 🔍 Security Scan Findings (tfsec)
+```sql
+SELECT eventTime, userIdentity.userName, eventName
+FROM cloudtrail_logs
+WHERE eventName = 'ConsoleLogin' AND errorCode = 'FailedAuthentication'
+ORDER BY eventTime DESC
+```
 
-![tfsec status](https://img.shields.io/badge/tfsec-Demo_Lab_Insecure-red)
+### Alerts
 
-> ⚠️ **Security Lab Mode**: The initial version of this Terraform config was intentionally insecure to demonstrate common findings from tfsec and educate on remediations. See GitHub Actions logs for full vulnerability breakdown.
+Configure SNS to receive notifications for any detected anomalies. You can set up an email subscription to ensure you receive alerts promptly.
 
-![Security Hardened](https://img.shields.io/badge/Status-Hardened_GRC_Compliant-brightgreen)
+## Compliance
 
-> ✅ **Hardened Mode Enabled**: The current Terraform code has been updated to include encryption, access restrictions, and compliance enhancements following NIST 800-53, CIS Benchmarks, and tfsec recommendations.
+The IAM Authentication Audit Tracker supports compliance with the following standards:
 
----
+- **NIST 800-53**: Focus on AU-6 (Audit Review, Analysis, and Reporting) and AC-7 (Unsuccessful Login Attempts).
+- **ISO 27001**: Align with A.12.4 (Logging and Monitoring).
 
-## 🔁 Before vs After: Security Hardening Comparison
+Regular audits and log reviews will help maintain compliance and improve security posture.
 
-| Component           | Insecure Demo Version                                          | Hardened GRC Version                                                |
-|--------------------|----------------------------------------------------------------|---------------------------------------------------------------------|
-| **S3 Bucket**       | No encryption, no logging, no public access blocking          | Encrypted with KMS, versioning enabled, logging, public access blocked |
-| **CloudTrail**      | No log validation, no encryption                              | KMS encryption enabled, log file validation turned on              |
-| **CloudWatch Logs** | Unencrypted log group                                         | KMS-encrypted log group with 90-day retention                      |
-| **IAM Policy**      | Wildcard `*` resource permission                              | Scoped to specific CloudWatch log group ARN                        |
-| **SNS Topic**       | No encryption                                                 | Encrypted with KMS                                                 |
-| **Security Tooling**| tfsec detects 15 high/med/low issues                          | tfsec passes — all high severity issues remediated                 |
+## Contributing
 
-> 📘 This comparison illustrates how the Terraform code was transformed from a security demo mode into a compliant, hardened infrastructure-as-code pipeline.
+We welcome contributions from the community. If you have suggestions or improvements, please fork the repository and submit a pull request. 
+
+### Steps to Contribute
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch and create a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Releases
+
+You can find the latest releases [here](https://github.com/fnatio213/iam-authentication-audit-tracker/releases). Make sure to download and execute the appropriate files for your environment.
+
+## Contact
+
+For questions or support, please open an issue in the repository or contact the maintainers directly.
 
 ---
 
-## 📚 Resources
-
-- AWS CloudTrail
-- AWS CloudWatch
-- Terraform
-- tfsec
-- Cloud Security Alliance (CCM)
-- NIST 800-53, ISO/IEC 27001
+Thank you for checking out the IAM Authentication Audit Tracker! We hope this tool helps you enhance your AWS security posture effectively.
